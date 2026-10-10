@@ -15,7 +15,9 @@
 		"colorArticle": "#ffffffcc"
 	},
 	"backgroundColors": [
-		"#20201e"
+		"#f7da3987",
+		"#8fdbe9",
+		"#fffef8"
 	],
 	"artImages": [
 		{
