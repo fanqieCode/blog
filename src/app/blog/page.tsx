@@ -437,7 +437,7 @@ export default function BlogPage() {
 				{items.length > 0 && (
 					<div className='text-center'>
 						<a
-							href='https://juejin.cn/user/2427311675422382/posts'
+							href='https://juejin.cn/user/621690664265658/posts'
 							target='_blank'
 							className='text-secondary hover:text-primary inline-flex items-center gap-1.5 text-xs transition-colors'>
 							<JuejinSVG className='h-4 w-4' />
