@@ -90,7 +90,7 @@ export default function Page() {
 	}, [input])
 
 	return (
-		<div className='mx-auto max-w-3xl space-y-4 px-4 py-24'>
+		<div className='mx-auto max-w-3xl space-y-4'>
 			<h1 className='text-xl font-semibold tracking-tight'>鸣潮 · 抽卡记录分析</h1>
 			<p className='text-sm'>
 				<span>使用方法：</span>

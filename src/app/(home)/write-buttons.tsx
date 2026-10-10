@@ -38,8 +38,6 @@ export default function WriteButton() {
 					onClick={() => router.push('/write')}
 					initial={{ opacity: 0, scale: 0.6 }}
 					animate={{ opacity: 1, scale: 1 }}
-					whileHover={{ scale: 1.05 }}
-					whileTap={{ scale: 0.95 }}
 					style={{ boxShadow: 'inset 0 0 12px rgba(255, 255, 255, 0.4)' }}
 					className='brand-btn whitespace-nowrap'>
 					{siteContent.enableChristmas && (
@@ -59,8 +57,6 @@ export default function WriteButton() {
 				<motion.button
 					initial={{ opacity: 0, scale: 0.6 }}
 					animate={{ opacity: 1, scale: 1 }}
-					whileHover={{ scale: 1.05 }}
-					whileTap={{ scale: 0.95 }}
 					onClick={() => setConfigDialogOpen(true)}
 					className='p-2'>
 					<DotsSVG className='h-6 w-6' />

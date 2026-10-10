@@ -2,7 +2,7 @@
 
 import { motion } from 'motion/react'
 import { ColorPicker } from '@/components/color-picker'
-import { XIcon } from 'lucide-react'
+import { XIcon } from '@/components/icons'
 import type { SiteContent } from '../stores/config-store'
 import siteContent from '@/config/site-content.json'
 
@@ -21,53 +21,60 @@ type ColorPreset = {
 
 const COLOR_PRESETS: ColorPreset[] = [
 	{
-		name: '春暖',
+		name: '石墨',
 		theme: {
-			colorBrand: '#35bfab',
-			colorBrandSecondary: '#1fc9e7',
-			colorPrimary: '#334f52',
-			colorSecondary: '#7b888e',
-			colorBg: '#eeeeee',
-			colorBorder: '#ffffff',
-			colorCard: '#ffffff66',
-			colorArticle: '#ffffffcc'
+			colorBrand: '#3a3a37',
+			colorBrandSecondary: '#8a8a85',
+			colorPrimary: '#1a1a19',
+			colorSecondary: '#73726e',
+			colorBg: '#fbfbfa',
+			colorBorder: '#e6e5e1',
+			colorCard: '#ffffff',
+			colorArticle: '#ffffff'
 		},
-		backgroundColors: ['#EDDD62', '#9EE7D1', '#84D68A', '#EDDD62', '#88E6E5', '#a7f3d0']
+		backgroundColors: ['#e8e6e1', '#d9d6d0', '#f2f0ec']
 	},
 	{
-		name: '秋实',
+		name: '暖灰',
 		theme: {
-			colorPrimary: '#4E3F42',
-			colorBrand: '#de4331',
-			colorBrandSecondary: '#FCC841'
+			colorPrimary: '#24211e',
+			colorSecondary: '#7a736b',
+			colorBrand: '#4a443d',
+			colorBrandSecondary: '#948c82',
+			colorBg: '#f7f5f2',
+			colorBorder: '#e7e2da',
+			colorCard: '#ffffff',
+			colorArticle: '#ffffff'
 		},
-		backgroundColors: ['#FCC841', '#DFEFFC', '#DEDE92', '#DE4331', '#FE9750', '#FCC841']
+		backgroundColors: ['#e9e4dc', '#d8d1c6', '#f4f1ec']
 	},
 	{
-		name: '晴空',
+		name: '冷灰',
 		theme: {
-			colorBrand: '#2fcbe7',
-			colorPrimary: '#5B423F',
-			colorSecondary: '#8b7667',
-			colorBrandSecondary: '#eec25e',
-			colorBg: '#d4e8f3',
-			colorCard: '#ffffff99',
+			colorPrimary: '#1b1d1f',
+			colorSecondary: '#6f757a',
+			colorBrand: '#34393d',
+			colorBrandSecondary: '#8b9196',
+			colorBg: '#f6f7f8',
+			colorBorder: '#e2e5e8',
+			colorCard: '#ffffff',
+			colorArticle: '#ffffff'
 		},
-		backgroundColors: ['#f7da3987', '#8fdbe9', '#fffef8']
+		backgroundColors: ['#e3e6e9', '#d2d7db', '#f2f4f6']
 	},
 	{
-		name: '深夜',
+		name: '纯白',
 		theme: {
-			colorBrand: '#2a48f3',
-			colorPrimary: '#e6e8e8',
-			colorSecondary: '#acadae',
-			colorBrandSecondary: '#51d0b9',
-			colorBg: '#0a051f',
-			colorBorder: '#8a8a8a5e',
-			colorCard: '#ffffff0e',
-			colorArticle: '#6f6f6f33'
+			colorPrimary: '#111111',
+			colorSecondary: '#666666',
+			colorBrand: '#222222',
+			colorBrandSecondary: '#999999',
+			colorBg: '#ffffff',
+			colorBorder: '#e5e5e5',
+			colorCard: '#ffffff',
+			colorArticle: '#ffffff'
 		},
-		backgroundColors: ['#16007b']
+		backgroundColors: ['#eeeeee', '#e0e0e0', '#f7f7f7']
 	}
 ]
 
@@ -199,15 +206,11 @@ export function ColorConfig({ formData, setFormData }: ColorConfigProps) {
 					<label className='block text-sm font-medium'>背景颜色</label>
 					<div className='flex gap-2'>
 						<motion.button
-							whileHover={{ scale: 1.05 }}
-							whileTap={{ scale: 0.95 }}
 							onClick={handleRandomizeColors}
 							className='rounded-lg border bg-white/60 px-3 py-1 text-xs whitespace-nowrap'>
 							随机配色
 						</motion.button>
 						<motion.button
-							whileHover={{ scale: 1.05 }}
-							whileTap={{ scale: 0.95 }}
 							onClick={handleAddColor}
 							className='rounded-lg border bg-white/60 px-3 py-1 text-xs whitespace-nowrap'>
 							+ 添加颜色

@@ -103,7 +103,7 @@ export default function Page() {
 				}}
 			/>
 
-			<div className='flex flex-col items-center justify-center px-6 pt-32 pb-12 max-sm:px-0'>
+			<div className='flex flex-col items-center justify-center pb-12'>
 				<div className='w-full max-w-[800px]'>
 					{isEditMode ? (
 						isPreviewMode ? (
@@ -184,34 +184,28 @@ export default function Page() {
 				</div>
 			</div>
 
-			<motion.div initial={{ opacity: 0, scale: 0.6 }} animate={{ opacity: 1, scale: 1 }} className='fixed top-4 right-6 z-10 flex gap-3 max-sm:hidden'>
+			<motion.div initial={{ opacity: 0, scale: 0.6 }} animate={{ opacity: 1, scale: 1 }} className='fixed top-[72px] right-6 z-40 flex gap-3 max-sm:hidden'>
 				{isEditMode ? (
 					<>
 						<motion.button
-							whileHover={{ scale: 1.05 }}
-							whileTap={{ scale: 0.95 }}
 							onClick={handleCancel}
 							disabled={isSaving}
 							className='rounded-xl border bg-white/60 px-6 py-2 text-sm'>
 							取消
 						</motion.button>
 						<motion.button
-							whileHover={{ scale: 1.05 }}
-							whileTap={{ scale: 0.95 }}
 							onClick={() => setIsPreviewMode(prev => !prev)}
 							disabled={isSaving}
 							className={`rounded-xl border bg-white/60 px-6 py-2 text-sm`}>
 							{isPreviewMode ? '继续编辑' : '预览'}
 						</motion.button>
-						<motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} onClick={handleSaveClick} disabled={isSaving} className='brand-btn px-6'>
+						<motion.button onClick={handleSaveClick} disabled={isSaving} className='brand-btn px-6'>
 							{isSaving ? '保存中...' : buttonText}
 						</motion.button>
 					</>
 				) : (
 					!hideEditButton && (
 						<motion.button
-							whileHover={{ scale: 1.05 }}
-							whileTap={{ scale: 0.95 }}
 							onClick={handleEnterEditMode}
 							className='rounded-xl border bg-white/60 px-6 py-2 text-sm backdrop-blur-sm transition-colors hover:bg-white/80'>
 							编辑

@@ -36,28 +36,28 @@ export default function GridView({ bloggers, isEditMode = false, onUpdate, onDel
 	})
 
 	return (
-		<div className='mx-auto w-full max-w-7xl px-6 pt-24 pb-12'>
+		<div className='mx-auto w-full max-w-7xl pb-12'>
 			<div className='mb-8 space-y-4'>
 				<input
 					type='text'
 					placeholder='搜索博主...'
 					value={searchTerm}
 					onChange={e => setSearchTerm(e.target.value)}
-					className='focus:ring-brand mx-auto block w-full max-w-md rounded-lg border border-gray-300 px-4 py-2 focus:ring-2 focus:outline-none'
+					className='focus:ring-brand border-border bg-card text-secondary mx-auto block w-full max-w-md rounded-lg border px-4 py-2 text-sm focus:ring-2 focus:outline-none'
 				/>
 
 				<div className='flex flex-wrap justify-center gap-2'>
 					<button
 						onClick={() => setSelectedCategory('recent')}
-						className={`rounded-full px-4 py-1.5 text-sm transition-colors ${
-							selectedCategory === 'recent' ? 'bg-brand text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+						className={`rounded-md px-3 py-1 text-xs transition-colors ${
+							selectedCategory === 'recent' ? 'text-primary bg-border/60 font-medium' : 'text-secondary hover:text-primary'
 						}`}>
 						近期更新
 					</button>
 					<button
 						onClick={() => setSelectedCategory('disconnected')}
-						className={`rounded-full px-4 py-1.5 text-sm transition-colors ${
-							selectedCategory === 'disconnected' ? 'bg-brand text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+						className={`rounded-md px-3 py-1 text-xs transition-colors ${
+							selectedCategory === 'disconnected' ? 'text-primary bg-border/60 font-medium' : 'text-secondary hover:text-primary'
 						}`}>
 						长期失联
 					</button>

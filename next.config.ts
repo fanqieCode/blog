@@ -15,7 +15,7 @@ const nextConfig: NextConfig = {
 	turbopack: {
 		rules: {
 			'*.svg': {
-				loaders: ['@svgr/webpack'],
+				loaders: [{ loader: '@svgr/webpack', options: { svgo: false, svgProps: { suppressHydrationWarning: true } } }],
 				as: '*.js'
 			}
 			// ...codeInspectorPlugin({
@@ -28,7 +28,7 @@ const nextConfig: NextConfig = {
 	webpack: config => {
 		config.module.rules.push({
 			test: /\.svg$/i,
-			use: [{ loader: '@svgr/webpack', options: { svgo: false } }]
+			use: [{ loader: '@svgr/webpack', options: { svgo: false, svgProps: { suppressHydrationWarning: true } } }]
 		})
 
 		return config

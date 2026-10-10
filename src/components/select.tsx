@@ -113,6 +113,7 @@ export function Select({ value, onChange, options, className, disabled }: Select
 				)}>
 				<span className='flex-1 text-left'>{selectedOption?.label}</span>
 				<svg
+					suppressHydrationWarning
 					className={cn('h-3.5 w-3.5 transition-transform duration-200', open && 'rotate-180')}
 					fill='none'
 					viewBox='0 0 24 24'

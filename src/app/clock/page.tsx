@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react'
 import { motion } from 'motion/react'
-import { Play, Pause, RotateCcw } from 'lucide-react'
+import { Play, Pause, RotateCcw } from '@/components/icons'
 import { cn } from '@/lib/utils'
 
 type TimerMode = 'stopwatch' | 'timer'
@@ -133,13 +133,11 @@ export default function ClockPage() {
 	const canStart = mode === 'timer' ? timerTime > 0 || timerInput.hours > 0 || timerInput.minutes > 0 || timerInput.seconds > 0 : true
 
 	return (
-		<div className='flex flex-col items-center px-6 pt-32 pb-12'>
+		<div className='flex flex-col items-center pb-12'>
 			<motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} className='w-full max-w-[600px] space-y-8'>
 				{/* Mode Selector */}
 				<div className='card relative flex gap-4 rounded-xl p-2'>
 					<motion.button
-						whileHover={{ scale: 1.02 }}
-						whileTap={{ scale: 0.98 }}
 						onClick={() => {
 							setMode('stopwatch')
 							setIsRunning(false)
@@ -156,8 +154,6 @@ export default function ClockPage() {
 						秒表
 					</motion.button>
 					<motion.button
-						whileHover={{ scale: 1.02 }}
-						whileTap={{ scale: 0.98 }}
 						onClick={() => {
 							setMode('timer')
 							setIsRunning(false)
@@ -228,8 +224,6 @@ export default function ClockPage() {
 				<div className='flex items-center justify-center gap-4'>
 					{mode === 'stopwatch' && (
 						<motion.button
-							whileHover={{ scale: 1.05 }}
-							whileTap={{ scale: 0.95 }}
 							onClick={handleLap}
 							disabled={!isRunning}
 							className='flex h-16 w-16 items-center justify-center rounded-full border bg-white/60 text-sm font-medium backdrop-blur-sm transition-all hover:bg-white/80 disabled:cursor-not-allowed disabled:opacity-50'>
@@ -237,8 +231,6 @@ export default function ClockPage() {
 						</motion.button>
 					)}
 					<motion.button
-						whileHover={{ scale: 1.05 }}
-						whileTap={{ scale: 0.95 }}
 						onClick={handleStartPause}
 						disabled={!canStart}
 						className={`flex h-20 w-20 items-center justify-center rounded-full text-white shadow-lg transition-all disabled:cursor-not-allowed disabled:opacity-50 ${
@@ -247,8 +239,6 @@ export default function ClockPage() {
 						{isRunning ? <Pause className='h-8 w-8' /> : <Play className='h-8 w-8' />}
 					</motion.button>
 					<motion.button
-						whileHover={{ scale: 1.05 }}
-						whileTap={{ scale: 0.95 }}
 						onClick={handleReset}
 						disabled={isRunning && mode === 'stopwatch'}
 						className='flex h-16 w-16 items-center justify-center rounded-full border bg-white/60 backdrop-blur-sm transition-all hover:bg-white/80 disabled:cursor-not-allowed disabled:opacity-50'>

@@ -1,41 +1,23 @@
 'use client'
 
-import HiCard from '@/app/(home)/hi-card'
-import ArtCard from '@/app/(home)/art-card'
-import ClockCard from '@/app/(home)/clock-card'
-import CalendarCard from '@/app/(home)/calendar-card'
-import SocialButtons from '@/app/(home)/social-buttons'
-import ShareCard from '@/app/(home)/share-card'
-import AritcleCard from '@/app/(home)/aritcle-card'
-import WriteButtons from '@/app/(home)/write-buttons'
-import LikePosition from './like-position'
-import HatCard from './hat-card'
-import BeianCard from './beian-card'
-import { useSize } from '@/hooks/use-size'
-import { motion } from 'motion/react'
-import { useLayoutEditStore } from './stores/layout-edit-store'
-import { useConfigStore } from './stores/config-store'
-import { toast } from 'sonner'
-import ConfigDialog from './config-dialog/index'
+import Link from 'next/link'
+import dayjs from 'dayjs'
 import { useEffect } from 'react'
-import SnowfallBackground from '@/layout/backgrounds/snowfall'
+import SocialButtons from '@/app/(home)/social-buttons'
+import { useBlogIndex } from '@/hooks/use-blog-index'
+import { useConfigStore } from '@/app/(home)/stores/config-store'
+import ConfigDialog from './config-dialog/index'
+import { NAV_ITEMS } from '@/consts'
+
+const RECENT_COUNT = 5
+
+const SECTION_TITLE = 'text-secondary text-xs tracking-widest uppercase'
 
 export default function Home() {
-	const { maxSM } = useSize()
-	const { cardStyles, configDialogOpen, setConfigDialogOpen, siteContent } = useConfigStore()
-	const editing = useLayoutEditStore(state => state.editing)
-	const saveEditing = useLayoutEditStore(state => state.saveEditing)
-	const cancelEditing = useLayoutEditStore(state => state.cancelEditing)
-
-	const handleSave = () => {
-		saveEditing()
-		toast.success('首页布局偏移已保存（尚未提交到远程配置）')
-	}
-
-	const handleCancel = () => {
-		cancelEditing()
-		toast.info('已取消此次拖拽布局修改')
-	}
+	const { siteContent, configDialogOpen, setConfigDialogOpen } = useConfigStore()
+	const { items, loading } = useBlogIndex()
+	const recent = items.slice(0, RECENT_COUNT)
+	const hideEditButton = siteContent.hideEditButton ?? false
 
 	useEffect(() => {
 		const handleKeyDown = (e: KeyboardEvent) => {
@@ -52,46 +34,67 @@ export default function Home() {
 	}, [setConfigDialogOpen])
 
 	return (
-		<>
-			{siteContent.enableChristmas && <SnowfallBackground zIndex={0} count={!maxSM ? 125 : 20} />}
+		<div className='mx-auto w-full max-w-[680px] space-y-12 py-2'>
+			<section className='space-y-3'>
+				<h1 className='font-averia text-3xl leading-tight'>{siteContent.meta.title}</h1>
+				<p className='text-secondary text-sm leading-relaxed'>{siteContent.meta.description}</p>
+			</section>
 
-			{editing && (
-				<div className='pointer-events-none fixed inset-x-0 top-0 z-50 flex justify-center pt-6'>
-					<div className='pointer-events-auto flex items-center gap-3 rounded-2xl bg-white/80 px-4 py-2 shadow-lg backdrop-blur'>
-						<span className='text-xs text-gray-600'>正在编辑首页布局，拖拽卡片调整位置</span>
-						<div className='flex gap-2'>
-							<motion.button
-								type='button'
-								whileHover={{ scale: 1.05 }}
-								whileTap={{ scale: 0.95 }}
-								onClick={handleCancel}
-								className='rounded-xl border bg-white px-3 py-1 text-xs font-medium text-gray-700'>
-								取消
-							</motion.button>
-							<motion.button type='button' whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} onClick={handleSave} className='brand-btn px-3 py-1 text-xs'>
-								保存偏移
-							</motion.button>
-						</div>
-					</div>
-				</div>
-			)}
+			<section className='space-y-3'>
+				<h2 className={SECTION_TITLE}>导航</h2>
+				<ul className='border-border divide-border divide-y border-y'>
+					{NAV_ITEMS.map(item => (
+						<li key={item.href}>
+							<Link
+								href={item.href}
+								className='hover:text-primary flex items-baseline justify-between gap-4 py-3 text-sm transition-colors'>
+								<span>{item.label}</span>
+								<span className='text-secondary text-xs'>{item.href}</span>
+							</Link>
+						</li>
+					))}
+				</ul>
+			</section>
 
-			<div className='max-sm:flex max-sm:flex-col max-sm:items-center max-sm:gap-6 max-sm:pt-28 max-sm:pb-20'>
-				{cardStyles.artCard?.enabled !== false && <ArtCard />}
-				{cardStyles.hiCard?.enabled !== false && <HiCard />}
-				{!maxSM && cardStyles.clockCard?.enabled !== false && <ClockCard />}
-				{!maxSM && cardStyles.calendarCard?.enabled !== false && <CalendarCard />}
-				{cardStyles.socialButtons?.enabled !== false && <SocialButtons />}
-				{!maxSM && cardStyles.shareCard?.enabled !== false && <ShareCard />}
-				{cardStyles.articleCard?.enabled !== false && <AritcleCard />}
-				{!maxSM && cardStyles.writeButtons?.enabled !== false && <WriteButtons />}
-				{cardStyles.likePosition?.enabled !== false && <LikePosition />}
-				{cardStyles.hatCard?.enabled !== false && <HatCard />}
-				{cardStyles.beianCard?.enabled !== false && <BeianCard />}
+			<section className='space-y-4'>
+				<h2 className={SECTION_TITLE}>最新文章</h2>
+
+				{loading ? (
+					<div className='text-secondary text-xs'>加载中...</div>
+				) : recent.length === 0 ? (
+					<div className='text-secondary text-xs'>暂无文章</div>
+				) : (
+					<ul className='space-y-3'>
+						{recent.map(item => (
+							<li key={item.slug}>
+								<Link href={`/blog/${item.slug}`} className='group flex items-baseline justify-between gap-4'>
+									<span className='group-hover:text-primary truncate text-sm transition-colors'>{item.title || item.slug}</span>
+									<span className='text-secondary shrink-0 text-xs tabular-nums'>{dayjs(item.date).format('YYYY-MM-DD')}</span>
+								</Link>
+							</li>
+						))}
+					</ul>
+				)}
+
+			<div className='flex items-center gap-4'>
+				<Link href='/blog' className='text-secondary hover:text-primary inline-block text-xs transition-colors'>
+					全部文章 →
+				</Link>
+
+				{!hideEditButton && (
+					<Link href='/write' className='text-secondary hover:text-primary inline-block text-xs transition-colors'>
+						写文章 →
+					</Link>
+				)}
 			</div>
+		</section>
 
-			{siteContent.enableChristmas && <SnowfallBackground zIndex={2} count={!maxSM ? 125 : 20} />}
+			<section className='space-y-3'>
+				<h2 className={SECTION_TITLE}>联系</h2>
+				<SocialButtons />
+			</section>
+
 			<ConfigDialog open={configDialogOpen} onClose={() => setConfigDialogOpen(false)} />
-		</>
+		</div>
 	)
 }

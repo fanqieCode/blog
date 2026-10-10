@@ -44,7 +44,7 @@ export default function Page() {
 	}
 
 	return (
-		<div className='mx-auto max-w-5xl space-y-4 px-6 py-8'>
+		<div className='mx-auto max-w-5xl space-y-4'>
 			<div className='flex items-center justify-between gap-3'>
 				<h1 className='text-xl font-medium'>SVG Gallery</h1>
 				<input

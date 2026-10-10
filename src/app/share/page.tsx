@@ -143,33 +143,27 @@ export default function Page() {
 
 			<GridView shares={shares} isEditMode={isEditMode} onUpdate={handleUpdate} onDelete={handleDelete} />
 
-			<motion.div initial={{ opacity: 0, scale: 0.6 }} animate={{ opacity: 1, scale: 1 }} className='absolute top-4 right-6 flex gap-3 max-sm:hidden'>
+			<motion.div initial={{ opacity: 0, scale: 0.6 }} animate={{ opacity: 1, scale: 1 }} className='fixed top-[72px] right-6 z-40 flex gap-3 max-sm:hidden'>
 				{isEditMode ? (
 					<>
 						<motion.button
-							whileHover={{ scale: 1.05 }}
-							whileTap={{ scale: 0.95 }}
 							onClick={handleCancel}
 							disabled={isSaving}
 							className='rounded-xl border bg-white/60 px-6 py-2 text-sm'>
 							取消
 						</motion.button>
 						<motion.button
-							whileHover={{ scale: 1.05 }}
-							whileTap={{ scale: 0.95 }}
 							onClick={handleAdd}
 							className='rounded-xl border bg-white/60 px-6 py-2 text-sm'>
 							添加
 						</motion.button>
-						<motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} onClick={handleSaveClick} disabled={isSaving} className='brand-btn px-6'>
+						<motion.button onClick={handleSaveClick} disabled={isSaving} className='brand-btn px-6'>
 							{isSaving ? '保存中...' : buttonText}
 						</motion.button>
 					</>
 				) : (
 					!hideEditButton && (
 						<motion.button
-							whileHover={{ scale: 1.05 }}
-							whileTap={{ scale: 0.95 }}
 							onClick={() => setIsEditMode(true)}
 							className='bg-card rounded-xl border px-6 py-2 text-sm backdrop-blur-sm transition-colors hover:bg-white/80'>
 							编辑

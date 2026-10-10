@@ -5,6 +5,25 @@
 
 @plugin 'tailwindcss-animate';
 
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* 深色模式覆盖。必须 !important：根布局的 <html style> 内联变量与配置弹窗的
+   setProperty 都是 normal 内联声明，只有 important author 能稳定压过。 */
+html.dark {
+	--color-primary: #e9e8e5 !important;
+	--color-secondary: #8f8e8a !important;
+	--color-brand: #e9e8e5 !important;
+	--color-brand-secondary: #5a5a56 !important;
+	--color-bg: #0f0f0e !important;
+	--color-border: #262624 !important;
+	--color-card: #171716 !important;
+	--color-article: #141413 !important;
+}
+
+.dark {
+	color-scheme: dark;
+}
+
 @utility scrollbar-none {
 	scrollbar-width: none;
 	&::-webkit-scrollbar {
@@ -13,13 +32,17 @@
 }
 
 @layer base {
+	:root {
+		color-scheme: light;
+	}
+
 	html {
 		@apply text-primary bg-bg h-full leading-tight;
 		scroll-behavior: smooth;
 	}
 
 	body {
-		@apply h-full bg-none;
+		@apply min-h-full bg-none;
 	}
 	* {
 		@apply border-border;
@@ -87,59 +110,19 @@
 	/* Sonner Toaster styles */
 	html li[data-sonner-toast][data-styled='true'] {
 		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05) !important;
-		@apply bg-white/40! backdrop-blur;
+		@apply bg-card! backdrop-blur;
 	}
 }
 
 @utility card {
-	@apply bg-card absolute rounded-[40px] border p-6;
-	box-shadow:
-		0 40px 50px -32px rgba(0, 0, 0, 0.05),
-		inset 0 0 20 rgba(255, 255, 255, 0.25);
-	backdrop-filter: blur(4px);
-
-	&.squircle {
-		@supports (corner-shape: squircle) {
-			corner-shape: squircle;
-			@apply rounded-[64px];
-		}
-	}
-}
-
-@utility card-rounded {
-	@apply rounded-[40px];
-	@supports (corner-shape: squircle) {
-		corner-shape: squircle;
-		@apply rounded-[64px];
-	}
-}
-
-@utility text-linear {
-	background: linear-gradient(to right bottom, #0003 0%, #aaa1), linear-gradient(to right bottom, var(--color-brand) 40%, var(--color-brand-secondary));
-	-webkit-background-clip: text;
-	-webkit-text-fill-color: transparent;
-	background-clip: text;
-}
-
-@utility bg-linear {
-	background: linear-gradient(to right bottom, var(--color-brand) 0%, var(--color-brand-secondary));
-	color: white;
-}
-
-@utility shadow {
-	box-shadow: 0 40px 50px -32px rgba(0, 0, 0, 0.05);
+	@apply bg-card rounded-xl border p-4;
 }
 
 @utility btn-rounded {
 	@apply rounded-xl;
-	@supports (corner-shape: squircle) {
-		corner-shape: squircle;
-		@apply rounded-2xl;
-	}
 }
 @utility brand-btn {
-	@apply bg-brand btn-rounded flex items-center gap-2 border-[1.5px] px-4 py-2 text-sm font-medium text-white;
-	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+	@apply bg-brand btn-rounded flex items-center gap-2 px-4 py-2 text-sm font-medium text-white;
 }
 
 @utility no-spinner {
@@ -152,27 +135,37 @@
 	-moz-appearance: textfield;
 }
 
-@keyframes heartbeat-frame {
-	0%,
-	100% {
-		transform: scale(1);
-	}
-	20% {
-		transform: scale(1.15);
-	}
-	40% {
-		transform: scale(1);
-	}
-	60% {
-		transform: scale(1.15);
-	}
-	80% {
-		transform: scale(1);
-	}
+/* 深色兜底：覆盖散落在弹窗/面板里的硬编码白灰。
+   必须放在文件末尾且不包在任何 @layer 内 —— unlayered 才压得住 @layer utilities。 */
+.dark .bg-white,
+.dark .bg-white\/60,
+.dark .bg-white\/70,
+.dark .bg-white\/80,
+.dark .bg-white\/90 {
+	@apply bg-card;
 }
 
-.heartbeat-container:hover {
-	.heartbeat {
-		animation: heartbeat-frame 0.8s ease-in-out;
-	}
+.dark .text-gray-400,
+.dark .text-gray-500,
+.dark .text-gray-600,
+.dark .text-gray-700,
+.dark .text-gray-800 {
+	@apply text-secondary;
+}
+
+.dark .border-gray-200,
+.dark .border-gray-300 {
+	@apply border-border;
+}
+
+.dark .bg-gray-50,
+.dark .bg-gray-100,
+.dark .bg-gray-200,
+.dark .bg-gray-300 {
+	@apply bg-card;
+}
+
+.dark input,
+.dark textarea {
+	color-scheme: dark;
 }

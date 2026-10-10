@@ -25,35 +25,35 @@ export default function GridView({ shares, isEditMode = false, onUpdate, onDelet
 	})
 
 	return (
-		<div className='mx-auto w-full max-w-7xl px-6 pt-24 pb-12'>
+		<div className='mx-auto w-full max-w-7xl pb-12'>
 			<div className='mb-8 space-y-4'>
 				<input
 					type='text'
 					placeholder='搜索资源...'
 					value={searchTerm}
 					onChange={e => setSearchTerm(e.target.value)}
-					className='focus:ring-brand mx-auto block w-full max-w-md rounded-lg border border-gray-300 px-4 py-2 focus:ring-2 focus:outline-none'
-				/>
+				className='focus:ring-brand border-border bg-card text-secondary mx-auto block w-full max-w-md rounded-lg border px-4 py-2 text-sm focus:ring-2 focus:outline-none'
+			/>
 
-				<div className='flex flex-wrap justify-center gap-2'>
+			<div className='flex flex-wrap justify-center gap-2'>
+				<button
+					onClick={() => setSelectedTag('all')}
+					className={`rounded-md px-3 py-1 text-xs transition-colors ${
+						selectedTag === 'all' ? 'text-primary bg-border/60 font-medium' : 'text-secondary hover:text-primary'
+					}`}>
+					全部
+				</button>
+				{allTags.map(tag => (
 					<button
-						onClick={() => setSelectedTag('all')}
-						className={`rounded-full px-4 py-1.5 text-sm transition-colors ${
-							selectedTag === 'all' ? 'bg-brand text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+						key={tag}
+						onClick={() => setSelectedTag(tag)}
+						className={`rounded-md px-3 py-1 text-xs transition-colors ${
+							selectedTag === tag ? 'text-primary bg-border/60 font-medium' : 'text-secondary hover:text-primary'
 						}`}>
-						全部
+						{tag}
 					</button>
-					{allTags.map(tag => (
-						<button
-							key={tag}
-							onClick={() => setSelectedTag(tag)}
-							className={`rounded-full px-4 py-1.5 text-sm transition-colors ${
-								selectedTag === tag ? 'bg-brand text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-							}`}>
-							{tag}
-						</button>
-					))}
-				</div>
+				))}
+			</div>
 			</div>
 
 			<div className='grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3'>

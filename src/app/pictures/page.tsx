@@ -234,49 +234,41 @@ export default function Page() {
 			<RandomLayout pictures={pictures} isEditMode={isEditMode} onDeleteSingle={handleDeleteSingleImage} onDeleteGroup={handleDeleteGroup} />
 
 			{pictures.length === 0 && (
-				<div className='text-secondary flex min-h-screen items-center justify-center text-center text-sm'>
+				<div className='text-secondary flex min-h-[60vh] items-center justify-center text-center text-sm'>
 					还没有上传图片，点击右上角「编辑」后即可开始上传。
 				</div>
 			)}
 
-			<motion.div initial={{ opacity: 0, scale: 0.6 }} animate={{ opacity: 1, scale: 1 }} className='absolute top-4 right-6 flex gap-3 max-sm:hidden'>
+			<motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className='fixed top-[72px] right-6 z-40 flex items-center gap-2 max-sm:hidden'>
 				{isEditMode ? (
 					<>
-						<motion.button
-							whileHover={{ scale: 1.05 }}
-							whileTap={{ scale: 0.95 }}
+						<button
 							onClick={() => router.push('/image-toolbox')}
-							className='rounded-xl border bg-blue-50 px-4 py-2 text-sm text-blue-700'>
+							className='border-border bg-card text-secondary hover:text-primary rounded-lg border px-3 py-1.5 text-xs transition-colors'>
 							压缩工具
-						</motion.button>
-						<motion.button
-							whileHover={{ scale: 1.05 }}
-							whileTap={{ scale: 0.95 }}
+						</button>
+						<button
 							onClick={handleCancel}
 							disabled={isSaving}
-							className='rounded-xl border bg-white/60 px-6 py-2 text-sm'>
+							className='border-border bg-card text-secondary hover:text-primary rounded-lg border px-3 py-1.5 text-xs transition-colors'>
 							取消
-						</motion.button>
-						<motion.button
-							whileHover={{ scale: 1.05 }}
-							whileTap={{ scale: 0.95 }}
+						</button>
+						<button
 							onClick={() => setIsUploadDialogOpen(true)}
-							className='rounded-xl border bg-white/60 px-6 py-2 text-sm'>
+							className='border-border bg-card text-secondary hover:text-primary rounded-lg border px-3 py-1.5 text-xs transition-colors'>
 							上传
-						</motion.button>
-						<motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} onClick={handleSaveClick} disabled={isSaving} className='brand-btn px-6'>
+						</button>
+						<button onClick={handleSaveClick} disabled={isSaving} className='brand-btn rounded-lg px-3 py-1.5 text-xs'>
 							{isSaving ? '保存中...' : buttonText}
-						</motion.button>
+						</button>
 					</>
 				) : (
 					!hideEditButton && (
-						<motion.button
-							whileHover={{ scale: 1.05 }}
-							whileTap={{ scale: 0.95 }}
+						<button
 							onClick={() => setIsEditMode(true)}
-							className='rounded-xl border bg-white/60 px-6 py-2 text-sm backdrop-blur-sm transition-colors hover:bg-white/80'>
+							className='border-border bg-card text-secondary hover:text-primary rounded-lg border px-3 py-1.5 text-xs transition-colors'>
 							编辑
-						</motion.button>
+						</button>
 					)
 				)}
 			</motion.div>

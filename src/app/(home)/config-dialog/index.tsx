@@ -185,6 +185,8 @@ export default function ConfigDialog({ open, onClose }: ConfigDialogProps) {
 
 	const updateThemeVariables = (theme?: SiteContent['theme']) => {
 		if (typeof document === 'undefined' || !theme) return
+		// 深色模式下由 html.dark 的 !important 变量接管，配色预设不覆盖它
+		if (document.documentElement.classList.contains('dark')) return
 
 		const { colorBrand, colorBrandSecondary, colorPrimary, colorSecondary, colorBg, colorBorder, colorCard, colorArticle } = theme
 
@@ -258,21 +260,17 @@ export default function ConfigDialog({ open, onClose }: ConfigDialogProps) {
 					</div>
 					<div className='flex gap-3'>
 						<motion.button
-							whileHover={{ scale: 1.05 }}
-							whileTap={{ scale: 0.95 }}
 							onClick={handlePreview}
 							className='bg-card rounded-xl border px-6 py-2 text-sm'>
 							预览
 						</motion.button>
 						<motion.button
-							whileHover={{ scale: 1.05 }}
-							whileTap={{ scale: 0.95 }}
 							onClick={handleCancel}
 							disabled={isSaving}
 							className='bg-card rounded-xl border px-6 py-2 text-sm'>
 							取消
 						</motion.button>
-						<motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} onClick={handleSaveClick} disabled={isSaving} className='brand-btn px-6'>
+						<motion.button onClick={handleSaveClick} disabled={isSaving} className='brand-btn px-6'>
 							{isSaving ? '保存中...' : buttonText}
 						</motion.button>
 					</div>

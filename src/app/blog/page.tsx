@@ -9,7 +9,6 @@ dayjs.extend(weekOfYear)
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { toast } from 'sonner'
 import { INIT_DELAY } from '@/consts'
-import ShortLineSVG from '@/svgs/short-line.svg'
 import { useBlogIndex, type BlogIndexItem } from '@/hooks/use-blog-index'
 import { useCategories } from '@/hooks/use-categories'
 import { useReadArticles } from '@/hooks/use-read-articles'
@@ -19,7 +18,7 @@ import { useConfigStore } from '@/app/(home)/stores/config-store'
 import { readFileAsText } from '@/lib/file-utils'
 import { cn } from '@/lib/utils'
 import { saveBlogEdits } from './services/save-blog-edits'
-import { Check } from 'lucide-react'
+import { Check } from '@/components/icons'
 import { BlogCoverHoverPreview, useBlogCoverHover } from './components/blog-cover-hover'
 import { CategoryModal } from './components/category-modal'
 
@@ -327,12 +326,12 @@ export default function BlogPage() {
 				}}
 			/>
 
-			<div className='flex flex-col items-center justify-center gap-6 px-6 pt-24 max-sm:pt-24'>
+			<div className='mx-auto w-full max-w-[840px] space-y-10'>
 				{items.length > 0 && (
 					<motion.div
-						initial={{ opacity: 0, scale: 0.6 }}
-						animate={{ opacity: 1, scale: 1 }}
-						className='card btn-rounded relative mx-auto flex items-center gap-1 p-1 max-sm:hidden'>
+						initial={{ opacity: 0 }}
+						animate={{ opacity: 1 }}
+						className='flex items-center gap-1 max-sm:hidden'>
 						{[
 							{ value: 'day', label: '日' },
 							{ value: 'week', label: '周' },
@@ -340,17 +339,15 @@ export default function BlogPage() {
 							{ value: 'year', label: '年' },
 							...(enableCategories ? ([{ value: 'category', label: '分类' }] as const) : [])
 						].map(option => (
-							<motion.button
+							<button
 								key={option.value}
-								whileHover={{ scale: 1.05 }}
-								whileTap={{ scale: 0.95 }}
 								onClick={() => setDisplayMode(option.value as DisplayMode)}
 								className={cn(
-									'btn-rounded px-3 py-1.5 text-xs font-medium transition-all',
-									displayMode === option.value ? 'bg-brand text-white shadow-sm' : 'text-secondary hover:text-brand hover:bg-white/60'
+									'text-secondary hover:text-primary rounded-md px-2.5 py-1 text-xs transition-colors',
+									displayMode === option.value && 'text-primary bg-border/60 font-medium'
 								)}>
 								{option.label}
-							</motion.button>
+							</button>
 						))}
 					</motion.div>
 				)}
@@ -360,35 +357,32 @@ export default function BlogPage() {
 					if (!group) return null
 
 					return (
-						<motion.div
+						<motion.section
 							onMouseLeave={cancelCoverPreview}
 							key={groupKey}
-							initial={{ opacity: 0, scale: 0.95 }}
-							whileInView={{ opacity: 1, scale: 1 }}
+							initial={{ opacity: 0 }}
+							whileInView={{ opacity: 1 }}
 							transition={{ delay: INIT_DELAY / 2 }}
-							className='card relative w-full max-w-[840px] space-y-6'>
-							<div className='mb-3 flex items-center justify-between gap-3 text-base'>
-								<div className='flex items-center gap-3'>
-									<div className='font-medium'>{getGroupLabel(groupKey)}</div>
-									<div className='h-2 w-2 rounded-full bg-[#D9D9D9]'></div>
-									<div className='text-secondary text-sm'>{group.items.length} 篇文章</div>
+							className='space-y-4'>
+							<div className='flex items-center justify-between gap-3'>
+								<div className='flex items-baseline gap-2'>
+									<h2 className='text-sm font-medium'>{getGroupLabel(groupKey)}</h2>
+									<span className='text-secondary text-xs'>· {group.items.length} 篇</span>
 								</div>
 								{editMode &&
 									(() => {
 										const groupAllSelected = group.items.every(item => selectedSlugs.has(item.slug))
 										return (
-											<motion.button
-												whileHover={{ scale: 1.05 }}
-												whileTap={{ scale: 0.95 }}
+											<button
 												onClick={() => handleSelectGroup(groupKey)}
 												className={cn(
-													'rounded-lg border px-3 py-1 text-xs transition-colors',
+													'rounded-md px-2.5 py-1 text-xs transition-colors',
 													groupAllSelected
-														? 'border-brand/40 bg-brand/10 text-brand hover:bg-brand/20'
-														: 'text-secondary hover:border-brand/40 hover:text-brand border-transparent bg-white/60 hover:bg-white/80'
+														? 'text-primary bg-border/60 font-medium'
+														: 'text-secondary hover:text-primary'
 												)}>
 												{groupAllSelected ? '取消全选' : '全选该分组'}
-											</motion.button>
+											</button>
 										)
 									})()}
 							</div>
@@ -404,40 +398,31 @@ export default function BlogPage() {
 											key={it.slug}
 											onClick={event => handleItemClick(event, it.slug)}
 											className={cn(
-												'group flex min-h-10 items-center gap-3 py-3 transition-all',
-												editMode
-													? cn(
-															'rounded-lg border px-3',
-															isSelected ? 'border-brand/60 bg-brand/5' : 'hover:border-brand/40 border-transparent hover:bg-white/60'
-														)
-													: 'cursor-pointer'
+												'group flex items-baseline gap-4 py-2.5 transition-colors',
+												editMode &&
+													cn(
+														'rounded-md border px-3',
+														isSelected ? 'border-brand/60 bg-brand/5' : 'hover:border-border border-transparent'
+													)
 											)}>
 											{editMode && (
 												<span
 													className={cn(
-														'flex h-4 w-4 items-center justify-center rounded-full border text-[10px] font-semibold',
-														isSelected ? 'border-brand bg-brand text-white' : 'border-[#D9D9D9] text-transparent'
+														'flex h-4 w-4 shrink-0 items-center justify-center rounded-full border text-[10px] font-semibold',
+														isSelected ? 'border-brand bg-brand text-white' : 'border-border text-transparent'
 													)}>
 													<Check />
 												</span>
 											)}
-											<span className='text-secondary w-[44px] shrink-0 text-sm font-medium'>{dayjs(it.date).format('MM-DD')}</span>
+											<span className='text-secondary w-12 shrink-0 text-xs tabular-nums'>{dayjs(it.date).format('MM-DD')}</span>
 
-											<div className='relative flex h-2 w-2 items-center justify-center'>
-												<div className='bg-secondary group-hover:bg-brand h-[5px] w-[5px] rounded-full transition-all group-hover:h-4'></div>
-												<ShortLineSVG className='absolute bottom-4' />
-											</div>
-											<div
-												className={cn(
-													'flex-1 truncate text-sm font-medium transition-all',
-													editMode ? null : 'group-hover:text-brand group-hover:translate-x-2'
-												)}>
+											<div className='group-hover:text-primary flex-1 truncate text-[15px] leading-relaxed transition-colors'>
 												{it.title || it.slug}
-												{hasRead && <span className='text-secondary ml-2 text-xs'>[已阅读]</span>}
+												{hasRead && <span className='text-secondary/70 ml-2 text-[11px]'>[已阅读]</span>}
 											</div>
 											<div className='flex flex-wrap items-center gap-2 max-sm:hidden'>
 												{(it.tags || []).map(t => (
-													<span key={t} className='text-secondary text-sm'>
+													<span key={t} className='text-secondary/80 text-xs'>
 														#{t}
 													</span>
 												))}
@@ -446,22 +431,18 @@ export default function BlogPage() {
 									)
 								})}
 							</div>
-						</motion.div>
+						</motion.section>
 					)
 				})}
 				{items.length > 0 && (
 					<div className='text-center'>
-						<motion.a
-							initial={{ opacity: 0, scale: 0.6 }}
-							animate={{ opacity: 1, scale: 1 }}
-							whileHover={{ scale: 1.05 }}
-							whileTap={{ scale: 0.95 }}
+						<a
 							href='https://juejin.cn/user/2427311675422382/posts'
 							target='_blank'
-							className='card text-secondary static inline-flex items-center gap-2 rounded-xl px-4 py-2 text-xs'>
+							className='text-secondary hover:text-primary inline-flex items-center gap-1.5 text-xs transition-colors'>
 							<JuejinSVG className='h-4 w-4' />
 							更多
-						</motion.a>
+						</a>
 					</div>
 				)}
 			</div>
@@ -471,58 +452,45 @@ export default function BlogPage() {
 				{loading && <div className='text-secondary py-6 text-center text-sm'>加载中...</div>}
 			</div>
 
-			<motion.div
-				initial={{ opacity: 0, scale: 0.6 }}
-				animate={{ opacity: 1, scale: 1 }}
-				className='absolute top-4 right-6 flex items-center gap-3 max-sm:hidden'>
+			<motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className='fixed top-[72px] right-6 z-40 flex items-center gap-2 max-sm:hidden'>
 				{editMode ? (
 					<>
 						{enableCategories && (
-							<motion.button
-								whileHover={{ scale: 1.05 }}
-								whileTap={{ scale: 0.95 }}
+							<button
 								onClick={() => setCategoryModalOpen(true)}
 								disabled={saving}
-								className='rounded-xl border bg-white/60 px-4 py-2 text-sm transition-colors hover:bg-white/80'>
+								className='border-border bg-card text-secondary hover:text-primary rounded-lg border px-3 py-1.5 text-xs transition-colors'>
 								分类
-							</motion.button>
+							</button>
 						)}
-						<motion.button
-							whileHover={{ scale: 1.05 }}
-							whileTap={{ scale: 0.95 }}
+						<button
 							onClick={handleCancel}
 							disabled={saving}
-							className='rounded-xl border bg-white/60 px-6 py-2 text-sm'>
+							className='border-border bg-card text-secondary hover:text-primary rounded-lg border px-3 py-1.5 text-xs transition-colors'>
 							取消
-						</motion.button>
-						<motion.button
-							whileHover={{ scale: 1.05 }}
-							whileTap={{ scale: 0.95 }}
+						</button>
+						<button
 							onClick={selectedCount === editableItems.length ? handleDeselectAll : handleSelectAll}
-							className='rounded-xl border bg-white/60 px-4 py-2 text-sm transition-colors hover:bg-white/80'>
+							className='border-border bg-card text-secondary hover:text-primary rounded-lg border px-3 py-1.5 text-xs transition-colors'>
 							{selectedCount === editableItems.length ? '取消全选' : '全选'}
-						</motion.button>
-						<motion.button
-							whileHover={{ scale: 1.05 }}
-							whileTap={{ scale: 0.95 }}
+						</button>
+						<button
 							onClick={handleDeleteSelected}
 							disabled={selectedCount === 0}
-							className='rounded-xl border border-red-200 bg-red-50 px-4 py-2 text-sm text-red-600 transition-colors disabled:opacity-60'>
+							className='border-border bg-card rounded-lg border px-3 py-1.5 text-xs text-red-500 transition-colors hover:bg-red-500/10 disabled:opacity-60'>
 							删除(已选:{selectedCount}篇)
-						</motion.button>
-						<motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} onClick={handleSaveClick} disabled={saving} className='brand-btn px-6'>
+						</button>
+						<button onClick={handleSaveClick} disabled={saving} className='brand-btn rounded-lg px-3 py-1.5 text-xs'>
 							{saving ? '保存中...' : buttonText}
-						</motion.button>
+						</button>
 					</>
 				) : (
 					!hideEditButton && (
-						<motion.button
-							whileHover={{ scale: 1.05 }}
-							whileTap={{ scale: 0.95 }}
+						<button
 							onClick={toggleEditMode}
-							className='bg-card rounded-xl border px-6 py-2 text-sm backdrop-blur-sm transition-colors hover:bg-white/80'>
+							className='border-border bg-card text-secondary hover:text-primary rounded-lg border px-3 py-1.5 text-xs transition-colors'>
 							编辑
-						</motion.button>
+						</button>
 					)
 				)}
 			</motion.div>

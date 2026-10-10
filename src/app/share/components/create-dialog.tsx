@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { toast } from 'sonner'
-import { Plus } from 'lucide-react'
+import { Plus } from '@/components/icons'
 import LogoUploadDialog, { type LogoItem } from './logo-upload-dialog'
 import type { Share } from './share-card'
 import { DialogModal } from '@/components/dialog-modal'

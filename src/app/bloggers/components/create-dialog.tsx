@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { toast } from 'sonner'
-import { Plus } from 'lucide-react'
+import { Plus } from '@/components/icons'
 import AvatarUploadDialog, { type AvatarItem } from './avatar-upload-dialog'
 import { DialogModal } from '@/components/dialog-modal'
 

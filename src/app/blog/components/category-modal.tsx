@@ -5,7 +5,7 @@ import dayjs from 'dayjs'
 import type { BlogIndexItem } from '@/hooks/use-blog-index'
 import { DialogModal } from '@/components/dialog-modal'
 import { Select } from '@/components/select'
-import { X } from 'lucide-react'
+import { X } from '@/components/icons'
 
 interface CategoryModalProps {
 	open: boolean

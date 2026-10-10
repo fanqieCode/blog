@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { motion } from 'motion/react'
 import { toast } from 'sonner'
-import { Plus, X } from 'lucide-react'
+import { Plus, X } from '@/components/icons'
 import { DialogModal } from '@/components/dialog-modal'
 import { useAuthStore } from '@/hooks/use-auth'
 import { useConfigStore } from '@/app/(home)/stores/config-store'
@@ -133,39 +133,33 @@ export default function Page() {
 				}}
 			/>
 
-			<div className='flex min-h-[70vh] flex-col items-center justify-center px-6 py-24'>
+			<div className='flex min-h-[60vh] flex-col items-center justify-center'>
 				<div className='w-full max-w-3xl text-center'>
 					<p className='text-2xl leading-relaxed font-semibold'>{currentSnippet || '无'}</p>
 				</div>
 			</div>
 
-			<motion.div initial={{ opacity: 0, scale: 0.6 }} animate={{ opacity: 1, scale: 1 }} className='absolute top-4 right-6 flex gap-3 max-sm:hidden'>
+			<motion.div initial={{ opacity: 0, scale: 0.6 }} animate={{ opacity: 1, scale: 1 }} className='fixed top-[72px] right-6 z-40 flex gap-3 max-sm:hidden'>
 				{isEditMode ? (
 					<>
 						<motion.button
-							whileHover={{ scale: 1.05 }}
-							whileTap={{ scale: 0.95 }}
 							onClick={handleCancel}
 							disabled={isSaving}
 							className='rounded-xl border bg-white/60 px-6 py-2 text-sm'>
 							取消
 						</motion.button>
 						<motion.button
-							whileHover={{ scale: 1.05 }}
-							whileTap={{ scale: 0.95 }}
 							onClick={openManageDialog}
 							className='rounded-xl border bg-white/60 px-6 py-2 text-sm'>
 							管理
 						</motion.button>
-						<motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} onClick={handleSaveClick} disabled={isSaving} className='brand-btn px-6'>
+						<motion.button onClick={handleSaveClick} disabled={isSaving} className='brand-btn px-6'>
 							{isSaving ? '保存中...' : buttonText}
 						</motion.button>
 					</>
 				) : (
 					!hideEditButton && (
 						<motion.button
-							whileHover={{ scale: 1.05 }}
-							whileTap={{ scale: 0.95 }}
 							onClick={() => setIsEditMode(true)}
 							className='bg-card rounded-xl border px-6 py-2 text-sm backdrop-blur-sm transition-colors hover:bg-white/80'>
 							编辑
@@ -182,7 +176,7 @@ export default function Page() {
 							value={newSnippet}
 							onChange={e => setNewSnippet(e.target.value)}
 							placeholder='新增'
-							className='flex-1 rounded-lg border border-gray-200 bg-gray-50 px-3 py-2 text-sm focus:outline-none'
+							className='border-border bg-card text-secondary flex-1 rounded-lg border px-3 py-2 text-sm focus:outline-none'
 						/>
 						<button onClick={handleAddDraft} className='brand-btn flex items-center gap-1 px-4 py-2 text-sm'>
 							<Plus className='h-4 w-4' />
@@ -194,8 +188,8 @@ export default function Page() {
 						{draftSnippets.length === 0 && <p className='text-secondary py-6 text-center text-sm'>暂无内容</p>}
 						{draftSnippets.map((item, index) => (
 							<div key={`${item}-${index}`} className='group flex items-start gap-3 rounded-lg px-3 py-2 text-sm'>
-								<p className='flex-1 leading-relaxed text-gray-800'>{item}</p>
-								<button onClick={() => handleRemoveDraft(index)} className='text-gray-400 transition-colors hover:text-red-500'>
+							<p className='flex-1 leading-relaxed'>{item}</p>
+							<button onClick={() => handleRemoveDraft(index)} className='text-secondary transition-colors hover:text-red-500'>
 									<X className='h-4 w-4' />
 								</button>
 							</div>
@@ -205,7 +199,7 @@ export default function Page() {
 					<div className='mt-4 flex gap-3'>
 						<button
 							onClick={cancelManageChanges}
-							className='flex-1 rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm transition-colors hover:bg-gray-50'>
+							className='border-border bg-card text-secondary hover:text-primary flex-1 rounded-lg border px-4 py-2 text-sm transition-colors'>
 							取消
 						</button>
 						<button onClick={applyManageChanges} className='brand-btn flex-1 justify-center px-4'>

@@ -2,7 +2,7 @@
 
 import { useState, useRef } from 'react'
 import { toast } from 'sonner'
-import { Plus } from 'lucide-react'
+import { Plus } from '@/components/icons'
 import { DialogModal } from '@/components/dialog-modal'
 
 export type ImageItem = { type: 'url'; url: string } | { type: 'file'; file: File; previewUrl: string; hash?: string }

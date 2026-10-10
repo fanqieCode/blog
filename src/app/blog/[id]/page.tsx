@@ -53,19 +53,19 @@ export default function Page() {
 	}
 
 	if (!slug) {
-		return <div className='text-secondary flex h-full items-center justify-center text-sm'>无效的链接</div>
+		return <div className='text-secondary flex min-h-[60vh] items-center justify-center text-sm'>无效的链接</div>
 	}
 
 	if (loading) {
-		return <div className='text-secondary flex h-full items-center justify-center text-sm'>加载中...</div>
+		return <div className='text-secondary flex min-h-[60vh] items-center justify-center text-sm'>加载中...</div>
 	}
 
 	if (error) {
-		return <div className='flex h-full items-center justify-center text-sm text-red-500'>{error}</div>
+		return <div className='flex min-h-[60vh] items-center justify-center text-sm text-red-500'>{error}</div>
 	}
 
 	if (!blog) {
-		return <div className='text-secondary flex h-full items-center justify-center text-sm'>文章不存在</div>
+		return <div className='text-secondary flex min-h-[60vh] items-center justify-center text-sm'>文章不存在</div>
 	}
 
 	return (
@@ -81,12 +81,10 @@ export default function Page() {
 			/>
 
 			<motion.button
-				initial={{ opacity: 0, scale: 0.6 }}
-				animate={{ opacity: 1, scale: 1 }}
-				whileHover={{ scale: 1.05 }}
-				whileTap={{ scale: 0.95 }}
+				initial={{ opacity: 0 }}
+				animate={{ opacity: 1 }}
 				onClick={handleEdit}
-				className='absolute top-4 right-6 rounded-xl border bg-white/60 px-6 py-2 text-sm backdrop-blur-sm transition-colors hover:bg-white/80 max-sm:hidden'>
+				className='border-border bg-card text-secondary hover:text-primary fixed top-[72px] right-6 z-40 rounded-lg border px-3 py-1.5 text-xs transition-colors max-sm:hidden'>
 				编辑
 			</motion.button>
 

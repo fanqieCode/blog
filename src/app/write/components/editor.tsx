@@ -160,7 +160,7 @@ export function WriteEditor() {
 			initial={{ opacity: 0, scale: 0.8 }}
 			animate={{ opacity: 1, scale: 1 }}
 			transition={{ delay: INIT_DELAY }}
-			className='bg-card flex min-h-[800px] w-[800px] flex-col rounded-[40px] border p-6 shadow'>
+			className='bg-card flex min-h-[800px] w-[800px] flex-col rounded-xl border p-6'>
 			<div className='mb-3 flex gap-3'>
 				<input
 					type='text'

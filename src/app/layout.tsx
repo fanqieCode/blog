@@ -23,8 +23,8 @@ export const metadata: Metadata = {
 	}
 }
 
+// CSS 自定义属性不属于 React.CSSProperties 的已知键，需要显式断言
 const htmlStyle = {
-	cursor: 'url(/images/cursor.svg) 2 1, auto',
 	'--color-brand': theme.colorBrand,
 	'--color-primary': theme.colorPrimary,
 	'--color-secondary': theme.colorSecondary,
@@ -33,7 +33,7 @@ const htmlStyle = {
 	'--color-border': theme.colorBorder,
 	'--color-card': theme.colorCard,
 	'--color-article': theme.colorArticle
-}
+} as React.CSSProperties
 
 export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
 	return (
@@ -47,6 +47,19 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
 					if (/windows|win32/i.test(navigator.userAgent)) {
 						document.documentElement.classList.add('windows');
 					}
+		      `
+					}}
+				/>
+				<script
+					dangerouslySetInnerHTML={{
+						__html: `
+					(function(){
+						try {
+							var stored = localStorage.getItem('blog-theme');
+							var isDark = stored ? stored === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+							if (isDark) document.documentElement.classList.add('dark');
+						} catch (e) {}
+					})();
 		      `
 					}}
 				/>

@@ -81,7 +81,7 @@ export function WriteActions() {
 			/>
 			<input ref={mdInputRef} type='file' accept='.md' className='hidden' onChange={handleMdFileChange} />
 
-			<ul className='absolute top-4 right-6 flex items-center gap-2'>
+			<ul className='fixed top-[72px] right-6 z-40 flex items-center gap-2'>
 				{mode === 'edit' && (
 					<>
 						<motion.div initial={{ opacity: 0, scale: 0.6 }} animate={{ opacity: 1, scale: 1 }} className='flex items-center gap-2'>
@@ -91,8 +91,6 @@ export function WriteActions() {
 						<motion.button
 							initial={{ opacity: 0, scale: 0.6 }}
 							animate={{ opacity: 1, scale: 1 }}
-							whileHover={{ scale: 1.05 }}
-							whileTap={{ scale: 0.95 }}
 							className='rounded-xl border border-red-200 bg-red-50 px-4 py-2 text-sm text-red-600 transition-colors hover:bg-red-100'
 							disabled={loading}
 							onClick={handleDelete}>
@@ -100,8 +98,6 @@ export function WriteActions() {
 						</motion.button>
 
 						<motion.button
-							whileHover={{ scale: 1.05 }}
-							whileTap={{ scale: 0.95 }}
 							onClick={handleCancel}
 							disabled={saving}
 							className='bg-card rounded-xl border px-4 py-2 text-sm'>
@@ -113,8 +109,6 @@ export function WriteActions() {
 				<motion.button
 					initial={{ opacity: 0, scale: 0.6 }}
 					animate={{ opacity: 1, scale: 1 }}
-					whileHover={{ scale: 1.05 }}
-					whileTap={{ scale: 0.95 }}
 					className='bg-card rounded-xl border px-4 py-2 text-sm'
 					disabled={loading}
 					onClick={handleImportMd}>
@@ -123,8 +117,6 @@ export function WriteActions() {
 				<motion.button
 					initial={{ opacity: 0, scale: 0.6 }}
 					animate={{ opacity: 1, scale: 1 }}
-					whileHover={{ scale: 1.05 }}
-					whileTap={{ scale: 0.95 }}
 					className='bg-card rounded-xl border px-6 py-2 text-sm'
 					disabled={loading}
 					onClick={openPreview}>
@@ -133,8 +125,6 @@ export function WriteActions() {
 				<motion.button
 					initial={{ opacity: 0, scale: 0.6 }}
 					animate={{ opacity: 1, scale: 1 }}
-					whileHover={{ scale: 1.05 }}
-					whileTap={{ scale: 0.95 }}
 					className='brand-btn px-6'
 					disabled={loading}
 					onClick={handleImportOrPublish}>

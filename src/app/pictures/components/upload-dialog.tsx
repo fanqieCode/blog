@@ -2,7 +2,7 @@
 
 import { useState, useRef } from 'react'
 import { toast } from 'sonner'
-import { Plus } from 'lucide-react'
+import { Plus } from '@/components/icons'
 import { DialogModal } from '@/components/dialog-modal'
 import type { ImageItem } from '../../projects/components/image-upload-dialog'
 
