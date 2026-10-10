@@ -1,8 +1,8 @@
 {
 	"meta": {
 		"title": "Vesper Blog",
-		"description": "博客，记录、分享、学习。",
-		"username": "Hello! I'm Vesper.welcome to my blog."
+		"description": "Hello! I'm Vesper. welcome to my blog.",
+		"username": "Vesper"
 	},
 	"theme": {
 		"colorBrand": "#3a3a37",

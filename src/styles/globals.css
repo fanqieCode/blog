@@ -165,6 +165,13 @@ html.dark {
 	@apply bg-card;
 }
 
+/* 品牌色按钮/徽标：深色模式下 --color-brand 变成浅色 (#e9e8e5)，
+   写死的 text-white 会变成白底白字。统一改为深色文字。 */
+.dark .brand-btn,
+.dark .bg-brand.text-white {
+	color: var(--color-bg);
+}
+
 .dark input,
 .dark textarea {
 	color-scheme: dark;
